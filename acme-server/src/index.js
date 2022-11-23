@@ -1,13 +1,13 @@
 const express = require('express');
+const routes = require('./routes');
 const app = express();
 
-
-app.get('/', (req, res) => {
-    return res.status(200).json({ message: "Servidor de pé" });
-});
+app.use(routes);
 
 const port = process.env.PORT || 3000;
 
-app.listen(() => {
+app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);
 });
+
+module.exports = app;
