@@ -1,10 +1,11 @@
+require('dotenv').config();
 const knex = require('knex')({
     client: 'pg',
     connection: {
-        host: 'http://localhost:3000/',
-        user: 'postgres',
-        password: 123456,
-        database: 'dbacme'
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        database: process.env.DB_NAME
     }
 });
 
