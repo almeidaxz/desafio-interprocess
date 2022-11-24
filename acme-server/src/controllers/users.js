@@ -13,7 +13,7 @@ const registerUser = async (req, res) => {
 
         return res.status(201).json({ message: 'Usuário cadastrado com sucesso.' });
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         return res.status(500).json({ message: 'Erro no servidor.' });
     }
 }
