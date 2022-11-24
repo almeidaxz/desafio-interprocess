@@ -1,4 +1,3 @@
-const { json } = require('express');
 const knex = require('../services/apiConnection');
 
 const registerUser = async (req, res) => {
