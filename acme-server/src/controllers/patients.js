@@ -66,9 +66,28 @@ const inactivatePatient = async (req, res) => {
     }
 }
 
+const activatePatient = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const existingPatient = await knex('patients').where({ id }).first();
+        if (!existingPatient) {
+            return res.status(404).json({ message: 'Paciente não encontrado.' });
+        }
+
+        await knex('patients').update({ active: true }).where({ id });
+
+        return res.status(200).json({ message: 'Paciente ativado com sucesso.' });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: 'Erro interno do servidor.' });
+    }
+}
+
 module.exports = {
     registerPatient,
     listPatients,
     editPatient,
-    inactivatePatient
+    inactivatePatient,
+    activatePatient
 }
