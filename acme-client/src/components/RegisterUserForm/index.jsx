@@ -21,16 +21,15 @@ export default function RegisterUserForm() {
     const registerUser = async (e) => {
         e.preventDefault();
 
-        if (registerUserForm.password !== registerUserForm.rePassword) {
-            return popup.toastError('Senhas não conferem.');
-        }
-
         try {
             const { rePassword: _, ...userData } = registerUserForm;
+            if (registerUserForm.password !== registerUserForm.rePassword) {
+                return popup.toastError('Senhas não conferem.');
+            }
             await api.post('/user/register', userData);
 
             popup.toastSuccess('Cadastro realizado com sucesso.');
-            // navigate('/login');
+            navigate('/login');
             setTimeout(() => {
             }, 1000);
         } catch (error) {
