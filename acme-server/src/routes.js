@@ -1,7 +1,7 @@
 const express = require('express');
 const routes = express();
 const { registerUser, loginUser } = require('./controllers/users');
-const { registerPatient } = require('./controllers/patients');
+const { registerPatient, listPatients } = require('./controllers/patients');
 const { validateUserData } = require('./middlewares/users');
 const { validatePatientData } = require('./middlewares/patients');
 const { registerUserSchema, loginUserSchema } = require('./schemas/users');
@@ -13,6 +13,7 @@ routes.get('/', (req, res) => {
 
 routes.post('/user/register', validateUserData(registerUserSchema), registerUser);
 routes.post('/user/login', validateUserData(loginUserSchema), loginUser);
+routes.get('patients/list', listPatients);
 routes.post('/patients/register', validatePatientData(registerPatientSchema), registerPatient);
 
 module.exports = routes;
