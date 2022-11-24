@@ -29,7 +29,27 @@ const registerPatient = async (req, res) => {
     }
 }
 
+const editPatient = async (req, res) => {
+    const { id } = req.params;
+    const { name, birth_date, cpf, gender, address } = req.body;
+
+    try {
+        const existingPatient = await knex('patients').where({ id }).first();
+        if (!existingPatient) {
+            return res.status(404).json({ message: 'Paciente não encontrado.' });
+        }
+
+        await knex('patients').update({ name, birth_date, cpf, gender, address }).where({ id });
+
+        return res.status(200).json({ message: 'Dados do paciente atualizados com sucesso.' });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: 'Erro interno do servidor.' });
+    }
+}
+
 module.exports = {
     registerPatient,
-    listPatients
+    listPatients,
+    editPatient
 }
