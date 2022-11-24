@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Home from './pages/Home';
-import RegisterUser from './pages/RegisterUser';
+import { BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
+import MainRoutes from './Routes';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {/* <Home /> */}
-    <RegisterUser />
+    <BrowserRouter>
+      <MainRoutes />
+      <ToastContainer />
+    </BrowserRouter>
   </React.StrictMode>
 )

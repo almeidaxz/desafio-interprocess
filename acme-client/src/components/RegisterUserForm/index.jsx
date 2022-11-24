@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Eye, EyeClosed } from "phosphor-react";
+import popup from "../../utils/toastify";
+import api from "../../services/apiConnection.js";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterUserForm() {
+    const navigate = useNavigate();
     const [showPass, setShowPass] = useState(false);
     const [registerUserForm, setRegisterUserForm] = useState({
         name: '',
@@ -12,15 +16,34 @@ export default function RegisterUserForm() {
 
     const handleChange = (e) => {
         setRegisterUserForm({ ...registerUserForm, [e.target.name]: e.target.value });
-        console.log(registerUserForm);
     }
 
-    const registerUser = async () => {
+    const registerUser = async (e) => {
+        e.preventDefault();
 
+        if (registerUserForm.password !== registerUserForm.rePassword) {
+            return popup.toastError('Senhas não conferem.');
+        }
+
+        try {
+            const { rePassword: _, ...userData } = registerUserForm;
+            await api.post('/user/register', userData);
+
+            popup.toastSuccess('Cadastro realizado com sucesso.');
+            // navigate('/login');
+            setTimeout(() => {
+            }, 1000);
+        } catch (error) {
+            console.log(error);
+            popup.toastError(error.response.data);
+        }
     }
 
     return (
-        <form className="w-[500px] p-8 flex flex-col gap-8 text-white bg-slate-600 rounded-lg">
+        <form
+            onSubmit={registerUser}
+            className="w-[500px] p-8 flex flex-col gap-8 text-white bg-slate-600 rounded-lg"
+        >
             <h1 className="text-center font-bold text-xl">Registrar-se</h1>
             <label className="flex flex-col gap-2 relative">
                 Nome
@@ -57,14 +80,14 @@ export default function RegisterUserForm() {
                 {showPass ?
                     <Eye
                         onClick={(e) => setShowPass(!showPass)}
-                        className="absolute top-[43px] right-3"
+                        className="absolute top-[43px] right-3 cursor-pointer"
                         color="black"
                         size={20}
                     />
                     :
                     <EyeClosed
                         onClick={(e) => setShowPass(!showPass)}
-                        className="absolute top-[43px] right-3"
+                        className="absolute top-[43px] right-3 cursor-pointer"
                         color="black"
                         size={20}
                     />
@@ -78,19 +101,19 @@ export default function RegisterUserForm() {
                     onChange={handleChange}
                     value={registerUserForm.rePassword}
                     type={showPass ? 'text' : 'password'}
-                    placeholder="Mínimo de 8 caracteres"
+                    placeholder="Confirme a senha anterior"
                 />
                 {showPass ?
                     <Eye
                         onClick={(e) => setShowPass(!showPass)}
-                        className="absolute top-[43px] right-3"
+                        className="absolute top-[43px] right-3 cursor-pointer"
                         color="black"
                         size={20}
                     />
                     :
                     <EyeClosed
                         onClick={(e) => setShowPass(!showPass)}
-                        className="absolute top-[43px] right-3"
+                        className="absolute top-[43px] right-3 cursor-pointer"
                         color="black"
                         size={20}
                     />
