@@ -23,6 +23,32 @@ const registerUser = async (req, res) => {
     }
 }
 
+const loginUser = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const existingUser = await knex('users').where({ email }).first();
+        if (!existingUser) {
+            return res.status(401).json({ message: 'Usuario não cadastrado.' });
+        }
+
+        const decryptedPassword = await bcrypt.compare(password, existingUser.password);
+        if (!decryptedPassword) {
+            return res.status(401).json({ message: 'Senha incorreta.' });
+        }
+
+        const token = jwt.sign({ id: existingUser.id, name: existingUser.name }, process.env.JWT_PASSWORD, { expiresIn: '8h' });
+
+        const { password: _, ...logedUser } = existingUser;
+
+        return res.status(200).json({ ...logedUser, token });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: 'Erro interno do servidor.' });
+    }
+}
+
 module.exports = {
-    registerUser
+    registerUser,
+    loginUser
 }
