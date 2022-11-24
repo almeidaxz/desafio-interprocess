@@ -13,7 +13,7 @@ routes.get('/', (req, res) => {
 
 routes.post('/user/register', validateUserData(registerUserSchema), registerUser);
 routes.post('/user/login', validateUserData(loginUserSchema), loginUser);
-routes.get('patients/list', listPatients);
+routes.get('/patients/list', listPatients);
 routes.post('/patients/register', validatePatientData(registerPatientSchema), registerPatient);
 
 module.exports = routes;
