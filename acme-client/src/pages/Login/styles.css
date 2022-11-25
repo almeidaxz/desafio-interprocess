@@ -1,0 +1,6 @@
+.bg-doc {
+    background-image: url('../../assets/bg-doc.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

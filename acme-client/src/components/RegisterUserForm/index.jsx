@@ -41,7 +41,7 @@ export default function RegisterUserForm() {
     return (
         <form
             onSubmit={registerUser}
-            className="w-[500px] p-8 flex flex-col gap-8 text-white bg-slate-600 rounded-lg"
+            className="w-[500px] py-10 px-8 flex flex-col gap-8 text-white bg-slate-600 rounded-lg"
         >
             <h1 className="text-center font-bold text-xl">Registrar-se</h1>
             <label className="flex flex-col gap-2 relative">
@@ -119,10 +119,19 @@ export default function RegisterUserForm() {
                 }
             </label>
             <button
-                className="w-32 py-2 rounded-lg self-center text-black bg-green-400 opacity-80 hover:opacity-100"
+                className="w-32 py-2 rounded-lg self-center text-white font-semibold bg-[#40c4ff] hover:bg-[#00a7ef]"
             >
                 Cadastrar
             </button>
+
+            <p className='text-center'>
+                Já possui conta? <span
+                    onClick={(e) => navigate('/')}
+                    className='underline opacity-80 hover:opacity-100 text-green-200 cursor-pointer'
+                >
+                    Acesse!
+                </span>
+            </p>
         </form>
     )
 }
