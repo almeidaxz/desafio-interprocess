@@ -17,10 +17,11 @@ export default function LoginForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+
         try {
             await api.post('/user/login', loginForm);
 
-
+            navigate('/home');
         } catch (error) {
             console.log(error);
             popup.toastError(error.response.data);
@@ -37,7 +38,10 @@ export default function LoginForm() {
                 E-mail
                 <input
                     className="py-2 px-3 rounded-lg text-black"
-                    type="email"
+                    name="email"
+                    onChange={handleChange}
+                    value={loginForm.email}
+                    type="text"
                     placeholder="Seu e-mail"
                 />
             </label>
@@ -45,7 +49,10 @@ export default function LoginForm() {
                 Senha
                 <input
                     className="py-2 px-3 rounded-lg text-black"
-                    type="email"
+                    name="password"
+                    onChange={handleChange}
+                    value={loginForm.password}
+                    type="password"
                     placeholder="Sua senha"
                 />
             </label>
