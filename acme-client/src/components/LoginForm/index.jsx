@@ -42,7 +42,7 @@ export default function LoginForm() {
                     onChange={handleChange}
                     value={loginForm.email}
                     type="text"
-                    placeholder="Seu e-mail"
+                    placeholder="Seu e-mail"    
                 />
             </label>
             <label className="flex flex-col gap-2 relative">
