@@ -1,3 +1,4 @@
+import { Eye, EyeClosed } from "phosphor-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/apiConnection";
@@ -5,6 +6,7 @@ import popup from '../../utils/toastify';
 
 export default function LoginForm() {
     const navigate = useNavigate();
+    const [showPass, setShowPass] = useState(false);
     const [loginForm, setLoginForm] = useState({
         email: '',
         password: ''
@@ -42,7 +44,7 @@ export default function LoginForm() {
                     onChange={handleChange}
                     value={loginForm.email}
                     type="text"
-                    placeholder="Seu e-mail"    
+                    placeholder="Seu e-mail"
                 />
             </label>
             <label className="flex flex-col gap-2 relative">
@@ -52,9 +54,24 @@ export default function LoginForm() {
                     name="password"
                     onChange={handleChange}
                     value={loginForm.password}
-                    type="password"
+                    type={showPass ? 'text' : 'password'}
                     placeholder="Sua senha"
                 />
+                {showPass ?
+                    <Eye
+                        onClick={(e) => setShowPass(!showPass)}
+                        className="absolute top-[43px] right-3 cursor-pointer"
+                        color="black"
+                        size={20}
+                    />
+                    :
+                    <EyeClosed
+                        onClick={(e) => setShowPass(!showPass)}
+                        className="absolute top-[43px] right-3 cursor-pointer"
+                        color="black"
+                        size={20}
+                    />
+                }
             </label>
             <button
                 className="w-32 py-2 rounded-lg self-center bg-[#40c4ff] hover:bg-[#00a7ef] font-semibold text-white"

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import PatientRow from "../../components/PatientRow";
 import popup from '../../utils/toastify';
 import api from '../../services/apiConnection';
+import PatientsModal from "../../components/PatientsModal";
 
 export default function Home() {
   const [patients, setPatients] = useState();
@@ -22,6 +23,7 @@ export default function Home() {
 
   return (
     <main className="w-[1024px] my-0 mx-auto flex flex-col items-center justify-center">
+      <PatientsModal />
       <h1 className="font-bold text-2xl">Pacientes</h1>
       <button
         className="w-32 py-2 mb-8 rounded-lg self-end text-white font-semibold bg-[#40c4ff] hover:bg-[#00a7ef]"

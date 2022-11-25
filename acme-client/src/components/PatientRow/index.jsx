@@ -2,7 +2,7 @@ import { Trash, Pencil } from 'phosphor-react';
 
 export default function PatientRow({ patient }) {
     return (
-        <tr>
+        <tr className='text-white'>
             <td className='max-w-[120px] truncate pl-4'>
                 {patient.name}
             </td>
