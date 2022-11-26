@@ -46,6 +46,29 @@ export default function PatientsFormModal({ patientForm, setPatientForm, INITIAL
             const onlyNumbersCPF = patientForm.cpf.replaceAll('.', '').replaceAll('-', '').replaceAll('_', '');
             const onlyNumbersZipCode = patientForm.zip_code.replaceAll('.', '').replaceAll('-', '').replaceAll('_', '');
 
+            if (patientForm.title === 'Editar Paciente') {
+                const {
+                    title: _,
+                    open: __,
+                    cpf: ___,
+                    zip_code: ____,
+                    id: _____,
+                    ...patientData
+                } = patientForm;
+
+                console.log(patientData);
+
+                const { data } = await api.put(`/patients/${patientForm.id}/edit`, {
+                    ...patientData,
+                    cpf: onlyNumbersCPF,
+                    zip_code: onlyNumbersZipCode
+                });
+
+                setPatientForm({ ...INITIAL_STATE });
+                getAllPatients()
+                return popup.toastSuccess(data);
+            }
+
             const {
                 title: _,
                 open: __,
@@ -162,17 +185,30 @@ export default function PatientsFormModal({ patientForm, setPatientForm, INITIAL
                         />
                     </label>
                 </div>
-                <label className="flex flex-col gap-2">
-                    Rua
-                    <input
-                        onChange={handleChange}
-                        name='address_line'
-                        value={patientForm.address_line}
-                        className="py-2 px-3 rounded-lg text-black"
-                        type="text"
-                        placeholder="Rua de Exemplo"
-                    />
-                </label>
+                <div className='flex items-center justify-between gap-6'>
+                    <label className="flex flex-col gap-2 w-3/5">
+                        Rua
+                        <input
+                            onChange={handleChange}
+                            name='address_line'
+                            value={patientForm.address_line}
+                            className="py-2 px-3 rounded-lg text-black"
+                            type="text"
+                            placeholder="Rua de Exemplo"
+                        />
+                    </label>
+                    <label className="flex flex-col gap-2 w-2/5">
+                        Bairro
+                        <input
+                            onChange={handleChange}
+                            name='address_line'
+                            value={patientForm.district}
+                            className="py-2 px-3 rounded-lg text-black"
+                            type="text"
+                            placeholder="Rua de Exemplo"
+                        />
+                    </label>
+                </div>
                 <div className="flex items-center justify-between gap-6">
                     <label className="flex flex-col w-3/5 gap-2">
                         Cidade

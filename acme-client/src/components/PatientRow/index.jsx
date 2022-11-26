@@ -49,12 +49,14 @@ export default function PatientRow({ patient, getAllPatients, setSelectedPatient
             popup.toastError(error.response.data);
         }
     }
-    
+
     const handleEdit = () => {
         const formatedDate = formatDateToInput(patient.birth_date);
-        setPatientForm({ ...patient, birth_date: formatedDate, title: 'Editar Paciente', open: true });
+
+        const { active: _, ...currentPatient } = patient;
+        setPatientForm({ ...currentPatient, birth_date: formatedDate, title: 'Editar Paciente', open: true });
     }
-    
+
     const handleOpenPatientDetails = () => {
         setSelectedPatient({ ...patientData, open: true })
     }

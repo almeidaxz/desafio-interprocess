@@ -20,7 +20,8 @@ export default function Home() {
     address_number: '',
     zip_code: '',
     city: '',
-    state: ''
+    state: '',
+    district: ''
   }
   const [patients, setPatients] = useState([]);
   const [initialPatients, setInitialPatients] = useState([]);
