@@ -13,6 +13,11 @@ CREATE TABLE IF NOT EXISTS patients (
     birth_date DATE NOT NULL,
     gender TEXT NOT NULL,
     cpf TEXT NULL UNIQUE,
-    address TEXT NULL,
+    zip_code TEXT DEFAULT NULL,
+	address_line TEXT DEFAULT NULL,
+	district TEXT DEFAULT NULL,
+ 	address_number TEXT DEFAULT NULL,
+	city TEXT DEFAULT NULL, 
+  	state TEXT DEFAULT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE
 );

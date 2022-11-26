@@ -54,6 +54,7 @@ export default function PatientRow({ patient, getAllPatients, setSelectedPatient
         const formatedDate = formatDateToInput(patient.birth_date);
 
         const { active: _, ...currentPatient } = patient;
+        console.log(currentPatient);
         setPatientForm({ ...currentPatient, birth_date: formatedDate, title: 'Editar Paciente', open: true });
     }
 

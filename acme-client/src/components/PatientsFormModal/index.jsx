@@ -56,8 +56,6 @@ export default function PatientsFormModal({ patientForm, setPatientForm, INITIAL
                     ...patientData
                 } = patientForm;
 
-                console.log(patientData);
-
                 const { data } = await api.put(`/patients/${patientForm.id}/edit`, {
                     ...patientData,
                     cpf: onlyNumbersCPF,
@@ -177,11 +175,11 @@ export default function PatientsFormModal({ patientForm, setPatientForm, INITIAL
                         Bairro
                         <input
                             onChange={handleChange}
-                            name='address_line'
+                            name='district'
                             value={patientForm.district}
                             className="py-2 px-3 rounded-lg text-black"
                             type="text"
-                            placeholder="Rua de Exemplo"
+                            placeholder="Bairro de Exemplo"
                         />
                     </label>
                 </div>

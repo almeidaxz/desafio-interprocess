@@ -65,10 +65,25 @@ const editPatientSchema = joi.object({
         'any.required': 'O gênero deve ser informado.',
         'string.empty': 'O gênero deve ser informado.'
     }),
-    address: joi.string().required().optional().empty().trim().messages({
-        'any.required': 'O endereço deve ser informado.',
-        'string.empty': 'O endereço deve ser informado.'
-    })
+    zip_code: joi.string().length(8).optional().empty('').messages({
+        'string.length': 'O CEP deve conter 8 dígitos.'
+    }),
+    address_number: joi.number().optional().empty('').messages({
+        'number.base': 'O número deve ser informado.'
+    }),
+    address_line: joi.string().required().optional().empty('').trim().messages({
+        'any.required': 'A rua deve ser informada.',
+        'string.empty': 'A rua deve ser informada.'
+    }),
+    district: joi.string().optional().empty('').trim().messages({
+        'any.required': 'O bairro deve ser informado.'
+    }),
+    city: joi.string().optional().empty('').trim().messages({
+        'any.required': 'A cidade deve ser informada.'
+    }),
+    state: joi.string().length(2).optional().empty('').trim().messages({
+        'string.length': 'O estado deve possuir 2 caracteres.'
+    }),
 });
 
 module.exports = {

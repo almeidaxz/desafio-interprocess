@@ -31,7 +31,7 @@ const registerPatient = async (req, res) => {
 
 const editPatient = async (req, res) => {
     const { id } = req.params;
-    const { name, birth_date, cpf, gender, address } = req.body;
+    const { name, birth_date, cpf, gender, address_line, address_number, district, city, state, zip_code } = req.body;
 
     try {
         const existingPatient = await knex('patients').where({ id }).first();
@@ -39,7 +39,7 @@ const editPatient = async (req, res) => {
             return res.status(404).json('Paciente não encontrado.');
         }
 
-        await knex('patients').update({ name, birth_date, cpf, gender, address }).where({ id });
+        await knex('patients').update({ name, birth_date, cpf, gender, address_line, address_number, district, city, state, zip_code }).where({ id });
 
         return res.status(200).json('Dados do paciente atualizados com sucesso.');
     } catch (error) {
