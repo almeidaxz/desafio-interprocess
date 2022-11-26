@@ -82,7 +82,13 @@ export default function Home() {
           getAllPatients={getAllPatients}
         />
       }
-      <PatientDetailsModal />
+      {selectedPatient.open &&
+        <PatientDetailsModal
+          selectedPatient={selectedPatient}
+          setSelectedPatient={setSelectedPatient}
+        />
+      }
+
       <h1 className="mb-4 font-bold text-2xl">Pacientes</h1>
       <div className="mb-4 flex items-center self-end gap-6">
         <button

@@ -4,6 +4,7 @@ import popup from '../../utils/toastify';
 import api from '../../services/apiConnection';
 
 export default function PatientRow({ patient, getAllPatients, selectedPatient, setSelectedPatient }) {
+    const [patientData, setPatientData] = useState({});
 
     const handleFormatData = () => {
 
@@ -25,7 +26,7 @@ export default function PatientRow({ patient, getAllPatients, selectedPatient, s
             formatedAddress = 'Não informado.';
         }
 
-        setSelectedPatient({ cpf: formatedCPF, gender: patient.gender, name: patient.name, address: formatedAddress, birth_date: birthDate });
+        setPatientData({ cpf: formatedCPF, gender: patient.gender, name: patient.name, address: formatedAddress, birth_date: birthDate });
     }
 
     const handleInactivate = async () => {
@@ -51,8 +52,7 @@ export default function PatientRow({ patient, getAllPatients, selectedPatient, s
     }
 
     const handleOpenPatientDetails = () => {
-        console.log('teste');
-        setSelectedPatient({ ...selectedPatient, open: true })
+        setSelectedPatient({ ...patientData, open: true })
     }
 
 
@@ -66,38 +66,38 @@ export default function PatientRow({ patient, getAllPatients, selectedPatient, s
         >
             <td
                 onClick={handleOpenPatientDetails}
-                style={patient.active === false ? { opacity: '0.5' } : null}
+                style={patient.active === false ? { color: '#CCC' } : null}
                 className='max-w-[120px] truncate cursor-pointer pl-4'
             >
-                {selectedPatient.name}
+                {patientData.name}
             </td>
             <td
                 onClick={handleOpenPatientDetails}
-                style={patient.active === false ? { opacity: '0.5' } : null}
+                style={patient.active === false ? { color: '#CCC' } : null}
                 className='max-w-[90px] truncate cursor-pointer'
             >
-                {selectedPatient.cpf}
+                {patientData.cpf}
             </td>
             <td
                 onClick={handleOpenPatientDetails}
-                style={patient.active === false ? { opacity: '0.5' } : null}
+                style={patient.active === false ? { color: '#CCC' } : null}
                 className='max-w-[80px] truncate cursor-pointer'
             >
-                {selectedPatient.birth_date}
+                {patientData.birth_date}
             </td>
             <td
                 onClick={handleOpenPatientDetails}
-                style={patient.active === false ? { opacity: '0.5' } : null}
+                style={patient.active === false ? { color: '#CCC' } : null}
                 className='max-w-[80px] truncate cursor-pointer'
             >
-                {selectedPatient.gender}
+                {patientData.gender}
             </td>
             <td
                 onClick={handleOpenPatientDetails}
-                style={patient.active === false ? { opacity: '0.5' } : null}
+                style={patient.active === false ? { color: '#CCC' } : null}
                 className='max-w-[140px] truncate cursor-pointer'
             >
-                {selectedPatient.address}
+                {patientData.address}
             </td>
             <td
                 className='py-4 pr-4 flex justify-end gap-3'
