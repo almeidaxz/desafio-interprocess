@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { useState } from 'react';
 import './styles.css';
 import api from '../../services/apiConnection';
 import fetchAddress from '../../services/cepConnection';
@@ -22,13 +21,23 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
         getAddress();
     }
 
+    const handleSubmit = async () => {
+        try {
+            await api.get('/patients/register');
+
+            setPatients(data);
+        } catch (error) {
+            popup.toastError('Erro cadastrar paciente. Verifique os dados e tente novamente.');
+        }
+    }
+
     return (
         <div
             className='modal-bg'
-            onClick={(e) => setPatientForm({ ...INITIAL_STATE, open: false })}
         >
             <form
-                className="flex flex-col w-[500px] px-8 py-8 gap-6 absolute text-white bg-slate-600 rounded-lg"
+                onSubmit={handleSubmit}
+                className="flex flex-col w-[500px] px-8 py-8 gap-4 absolute text-white bg-slate-600 rounded-lg"
             >
                 <XCircle
                     onClick={(e) => setPatientForm({ ...INITIAL_STATE, open: false })}
@@ -36,8 +45,8 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                     size={30}
                 />
                 <h1 className="font-bold text-xl text-center">Cadastrar paciente</h1>
-                <label className="flex flex-col">
-                    Nome
+                <label className="flex flex-col gap-2">
+                    Nome*
                     <input
                         onChange={handleChange}
                         name='name'
@@ -48,8 +57,8 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                     />
                 </label>
                 <div className="flex items-center justify-between gap-6">
-                    <label className="flex flex-col w-2/5">
-                        Data de nascimento
+                    <label className="flex flex-col w-2/5 gap-2">
+                        Data de nascimento*
                         <input
                             onChange={handleChange}
                             name='birth_date'
@@ -59,8 +68,8 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                             type="date"
                         />
                     </label>
-                    <label className="flex flex-col w-3/5">
-                        Gênero
+                    <label className="flex flex-col w-3/5 gap-2">
+                        Gênero*
                         <select
                             className="py-2 px-3 rounded-lg"
                             required
@@ -73,8 +82,8 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                         </select>
                     </label>
                 </div>
-                <label className="flex flex-col">
-                    CPF
+                <label className="flex flex-col gap-2">
+                    CPF*
                     <input
                         onChange={handleChange}
                         name='cpf'
@@ -84,7 +93,7 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                         placeholder="000.000.000-00"
                     />
                 </label>
-                <label className="flex flex-col">
+                <label className="flex flex-col gap-2">
                     Rua
                     <input
                         onChange={handleChange}
@@ -96,7 +105,7 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                     />
                 </label>
                 <div className="flex items-center justify-between gap-6">
-                    <label className="flex flex-col w-3/5">
+                    <label className="flex flex-col w-3/5 gap-2">
                         CEP
                         <input
                             onChange={handleChange}
@@ -108,7 +117,7 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                             placeholder="00.000-000"
                         />
                     </label>
-                    <label className="flex flex-col w-2/5">
+                    <label className="flex flex-col w-2/5 gap-2">
                         Número
                         <input
                             onChange={handleChange}
@@ -122,7 +131,7 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
 
                 </div>
                 <div className="flex items-center justify-between gap-6">
-                    <label className="flex flex-col w-3/5">
+                    <label className="flex flex-col w-3/5 gap-2">
                         Cidade
                         <input
                             onChange={handleChange}
@@ -133,7 +142,7 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                             placeholder="Porto Alegre"
                         />
                     </label>
-                    <label className="flex flex-col w-2/5">
+                    <label className="flex flex-col w-2/5 gap-2">
                         Estado
                         <input
                             onChange={handleChange}
