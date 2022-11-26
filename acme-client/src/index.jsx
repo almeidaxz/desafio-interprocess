@@ -7,10 +7,8 @@ import './index.css';
 import MainRoutes from './Routes';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
     <BrowserRouter>
       <MainRoutes />
       <ToastContainer />
     </BrowserRouter>
-  </React.StrictMode>
 )
