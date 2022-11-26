@@ -28,7 +28,7 @@ export default function PatientRow({ patient, getAllPatients }) {
         const cityAndState = [patient.city, patient.state].join('/');
 
         let formatedAddress = [patient?.address_line, patient?.address_number, patient?.district, cityAndState, formatedZipCode].join(', ');
-        if (formatedAddress === ', , , /, ') {
+        if (formatedAddress === ', , , /, -') {
             formatedAddress = 'Não informado.';
         }
 
@@ -102,21 +102,21 @@ export default function PatientRow({ patient, getAllPatients }) {
             >
                 <button
                     style={patient.active === false ? { display: 'none' } : { display: 'block' }}
-                    className='py-1 px-2 bg-blue-300 hover:bg-blue-400 rounded-lg cursor-pointer'
+                    className='py-1 px-2 bg-blue-300 hover:bg-blue-400 rounded-lg cursor-pointer shadow'
                 >
                     Editar
                 </button>
                 <button
                     onClick={handleInactivate}
                     style={patient.active === false ? { display: 'none' } : { display: 'block' }}
-                    className='py-1 px-2 bg-red-400 hover:bg-red-500 rounded-lg cursor-pointer'
+                    className='py-1 px-2 bg-red-400 hover:bg-red-500 rounded-lg cursor-pointer shadow'
                 >
                     Desativar
                 </button>
                 <button
                     onClick={handleReactivate}
                     style={patient.active === false ? { display: 'block' } : { display: 'none' }}
-                    className='py-1 px-2 bg-sky-400 hover:bg-sky-500 rounded-lg cursor-pointer'
+                    className='py-1 px-2 bg-sky-400 hover:bg-sky-500 rounded-lg cursor-pointer shadow'
                 >
                     Ativar
                 </button>

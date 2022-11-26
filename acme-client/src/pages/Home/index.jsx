@@ -3,6 +3,7 @@ import PatientRow from "../../components/PatientRow";
 import popup from '../../utils/toastify';
 import api from '../../services/apiConnection';
 import PatientsModal from "../../components/PatientsModal";
+import { MagnifyingGlass } from 'phosphor-react';
 
 export default function Home() {
   const INITIAL_STATE = {
@@ -12,11 +13,11 @@ export default function Home() {
     birth_date: '',
     gender: '',
     cpf: '',
-    address_line: undefined,
-    address_number: undefined,
+    address_line: '',
+    address_number: '',
     zip_code: '',
-    city: undefined,
-    state: undefined
+    city: '',
+    state: ''
   }
   const [patients, setPatients] = useState();
   const [patientForm, setPatientForm] = useState(INITIAL_STATE);
@@ -53,14 +54,27 @@ export default function Home() {
           getAllPatients={getAllPatients}
         />
       }
-      <h1 className="font-bold text-2xl">Pacientes</h1>
-      <button
-        className="w-32 py-2 mb-8 rounded-lg self-end text-white font-semibold bg-[#40c4ff] hover:bg-[#00a7ef]"
-        onClick={(e) => setPatientForm({ ...patientForm, open: true })}
-      >
-        Adicionar
-      </button>
-      <table className="py-4 w-[1024px] bg-slate-500 rounded-lg">
+      <h1 className="mb-4 font-bold text-2xl">Pacientes</h1>
+      <div className="mb-4 flex items-center self-end gap-6">
+        <button
+          className="w-32 py-1 rounded-lg self-end text-white font-semibold bg-[#40c4ff] hover:bg-[#00a7ef] shadow"
+          onClick={(e) => setPatientForm({ ...patientForm, open: true, title: 'Cadastrar Paciente' })}
+        >
+          Adicionar
+        </button>
+        <div className="relative">
+          <MagnifyingGlass
+            className="absolute top-[25%] right-[5%]"
+            weight="bold"
+          />
+          <input
+            className="w-64 px-3 py-1 rounded-lg shadow"
+            type="text"
+            placeholder="Pesquisar"
+          />
+        </div>
+      </div>
+      <table className="py-4 w-[1024px] bg-slate-500 rounded-lg shadow">
         <thead className="text-white font-semibold">
           <tr>
             <td className="w-[120px] px-4 py-4">Nome</td>

@@ -3,18 +3,23 @@ import './styles.css';
 import api from '../../services/apiConnection';
 import fetchAddress from '../../services/cepConnection';
 import popup from '../../utils/toastify';
+import InputMask from "react-input-mask";
 import { XCircle } from 'phosphor-react';
 
 export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STATE, getAllPatients }) {
 
     const handleChange = (e) => {
+        if (e.target.name === 'state') {
+            return setPatientForm({ ...patientForm, [e.target.name]: e.target.value.toUpperCase() });
+        }
         setPatientForm({ ...patientForm, [e.target.name]: e.target.value });
     }
 
     const getAddress = _.debounce(async () => {
-        if (patientForm.zip_code.length !== 8) return;
+        const onlyNumbersZipCode = patientForm.zip_code.replaceAll('.', '').replaceAll('-', '').replaceAll('_', '');
+        if (onlyNumbersZipCode.length !== 8) return;
 
-        const { data } = await fetchAddress.get(`/${patientForm.zip_code}/json/`);
+        const { data } = await fetchAddress.get(`/${onlyNumbersZipCode}/json/`);
         setPatientForm({ ...patientForm, district: data.bairro, address_line: data.logradouro, city: data.localidade, state: data.uf });
     }, 700);
 
@@ -26,8 +31,12 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
         e.preventDefault();
 
         try {
-            const { title: _, open: __, ...patientData } = patientForm;
-            const { data } = await api.post('/patients/register', patientData);
+            const onlyNumbersCPF = patientForm.cpf.replaceAll('.', '').replaceAll('-', '').replaceAll('_', '');
+            const onlyNumbersZipCode = patientForm.zip_code.replaceAll('.', '').replaceAll('-', '').replaceAll('_', '');
+
+            const { title: _, open: __, cpf: ___, zip_code: ____, ...patientData } = patientForm;
+
+            const { data } = await api.post('/patients/register', { ...patientData, cpf: onlyNumbersCPF, zip_code: onlyNumbersZipCode });
 
             setPatientForm({ ...INITIAL_STATE });
             getAllPatients()
@@ -50,7 +59,9 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                     className='absolute right-4 top-4 cursor-pointer hover:scale-[1.05]'
                     size={30}
                 />
-                <h1 className="font-bold text-xl text-center">Cadastrar paciente</h1>
+                <h1 className="font-bold text-xl text-center">
+                    {patientForm.title}
+                </h1>
                 <label className="flex flex-col gap-2">
                     Nome*
                     <input
@@ -92,25 +103,27 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                 </div>
                 <label className="flex flex-col gap-2">
                     CPF*
-                    <input
+                    <InputMask
                         onChange={handleChange}
                         name='cpf'
                         value={patientForm.cpf}
+                        mask='999.999.999-99'
                         className="py-2 px-3 rounded-lg text-black"
-                        type="number"
+                        type="text"
                         placeholder="000.000.000-00"
                     />
                 </label>
                 <div className="flex items-center justify-between gap-6">
                     <label className="flex flex-col w-3/5 gap-2">
                         CEP
-                        <input
+                        <InputMask
                             onChange={handleChange}
                             onKeyUp={handleGetAddress}
                             name='zip_code'
                             value={patientForm.zip_code}
+                            mask='99.999-999'
                             className="py-2 px-3 rounded-lg text-black"
-                            type="number"
+                            type="text"
                             placeholder="00.000-000"
                         />
                     </label>
@@ -151,10 +164,11 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                     </label>
                     <label className="flex flex-col w-2/5 gap-2">
                         Estado
-                        <input
+                        <InputMask
                             onChange={handleChange}
                             name='state'
                             value={patientForm.state}
+                            mask='aa'
                             className="py-2 px-3 rounded-lg text-black"
                             type="text"
                             placeholder="RS"

@@ -36,3 +36,9 @@ input[type=number] {
   bottom: 0;
   left: 0;
 }
+
+.shadow {
+  -webkit-box-shadow: 5px 9px 10px -5px rgba(0, 0, 0, 0.333);
+  -moz-box-shadow: 5px 9px 10px -5px rgba(0, 0, 0, 0.333);
+  box-shadow: 5px 9px 10px -5px rgba(0, 0, 0, 0.333);
+}

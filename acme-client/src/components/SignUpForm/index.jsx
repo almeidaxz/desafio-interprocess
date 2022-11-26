@@ -4,7 +4,7 @@ import popup from "../../utils/toastify";
 import api from "../../services/apiConnection.js";
 import { useNavigate } from "react-router-dom";
 
-export default function RegisterUserForm() {
+export default function SignUpForm() {
     const navigate = useNavigate();
     const [showPass, setShowPass] = useState(false);
     const [registerUserForm, setRegisterUserForm] = useState({
