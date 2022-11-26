@@ -47,6 +47,7 @@ export default function Home() {
       });
       const patientsList = [...activePatients, ...inactivePatients];
 
+      console.log(patientsList);
       setPatients(patientsList);
       setInitialPatients(patientsList);
     } catch (error) {
