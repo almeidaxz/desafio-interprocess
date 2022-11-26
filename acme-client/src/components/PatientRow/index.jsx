@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import { formatDateToBr } from '../../utils/formatDates';
+import { formatDateToBr, formatDateToInput } from '../../utils/formatDates';
 import popup from '../../utils/toastify';
 import api from '../../services/apiConnection';
 
-export default function PatientRow({ patient, getAllPatients, selectedPatient, setSelectedPatient }) {
+export default function PatientRow({ patient, getAllPatients, setSelectedPatient, setPatientForm }) {
     const [patientData, setPatientData] = useState({});
 
     const handleFormatData = () => {
-
         const formatCpf = (cpf) => {
             cpf = cpf.toString();
             return cpf.slice(0, 3) + "." + cpf.slice(3, 6) + "." + cpf.slice(6, 9) + "-" + cpf.slice(9, 11);
@@ -50,11 +49,15 @@ export default function PatientRow({ patient, getAllPatients, selectedPatient, s
             popup.toastError(error.response.data);
         }
     }
-
+    
+    const handleEdit = () => {
+        const formatedDate = formatDateToInput(patient.birth_date);
+        setPatientForm({ ...patient, birth_date: formatedDate, title: 'Editar Paciente', open: true });
+    }
+    
     const handleOpenPatientDetails = () => {
         setSelectedPatient({ ...patientData, open: true })
     }
-
 
     useEffect(() => {
         handleFormatData();
@@ -103,6 +106,7 @@ export default function PatientRow({ patient, getAllPatients, selectedPatient, s
                 className='py-4 pr-4 flex justify-end gap-3'
             >
                 <button
+                    onClick={handleEdit}
                     style={patient.active === false ? { display: 'none' } : { display: 'block' }}
                     className='py-1 px-2 bg-blue-300 hover:bg-blue-400 rounded-lg cursor-pointer shadow'
                 >

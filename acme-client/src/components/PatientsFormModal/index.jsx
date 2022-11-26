@@ -51,6 +51,7 @@ export default function PatientsFormModal({ patientForm, setPatientForm, INITIAL
                 open: __,
                 cpf: ___,
                 zip_code: ____,
+                id: _____,
                 ...patientData
             } = patientForm;
 

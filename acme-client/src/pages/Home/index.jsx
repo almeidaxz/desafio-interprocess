@@ -9,6 +9,7 @@ import { MagnifyingGlass } from 'phosphor-react';
 
 export default function Home() {
   const INITIAL_STATE = {
+    id: '',
     title: '',
     open: false,
     name: '',
@@ -126,6 +127,7 @@ export default function Home() {
             return <PatientRow
               key={patient?.id}
               patient={patient}
+              setPatientForm={setPatientForm}
               getAllPatients={getAllPatients}
               selectedPatient={selectedPatient}
               setSelectedPatient={setSelectedPatient}
