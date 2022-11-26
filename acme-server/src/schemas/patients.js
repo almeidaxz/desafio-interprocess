@@ -1,14 +1,16 @@
-const joi = require('joi');
+const joiImport = require('joi');
+const dateExtension = require('@joi/date');
+const joi = joiImport.extend(dateExtension);
 
 const registerPatientSchema = joi.object({
     name: joi.string().required().trim().messages({
         'any.required': 'O nome deve ser preenchido.',
         'string.empty': 'O nome deve ser preenchido.'
     }),
-    birth_date: joi.date().format('yyyy-mm-dd').greater('now').required().messages({
+    birth_date: joi.date().format('YYYY-MM-DD').required().messages({
         'any.required': 'A senha deve ser preenchida.',
         'date.greater': 'A data de nascimento não deve ser maior do que hoje.',
-        'date.format': 'O formado de data inválido.'
+        'date.format': 'Informe uma data válida.'
     }),
     gender: joi.string().required().trim().messages({
         'any.required': 'O gênero deve ser informado.',
