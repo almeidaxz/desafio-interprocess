@@ -39,6 +39,11 @@ const editPatient = async (req, res) => {
             return res.status(404).json('Paciente não encontrado.');
         }
 
+        const existingCPF = await knex('patients').where({ cpf }).first();
+        if (existingCPF && existingCPF.id !== Number(id)) {
+            return res.status(400).json('Já existe um paciente com este CPF cadastrado.');
+        }
+
         await knex('patients').update({ name, birth_date, cpf, gender, address_line, address_number, district, city, state, zip_code }).where({ id });
 
         return res.status(200).json('Dados do paciente atualizados com sucesso.');

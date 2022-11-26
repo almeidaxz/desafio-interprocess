@@ -63,7 +63,7 @@ export default function PatientsFormModal({ patientForm, setPatientForm, INITIAL
                 });
 
                 setPatientForm({ ...INITIAL_STATE });
-                getAllPatients()
+                getAllPatients();
                 return popup.toastSuccess(data);
             }
 
