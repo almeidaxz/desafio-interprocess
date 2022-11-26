@@ -173,15 +173,15 @@ export default function PatientsFormModal({ patientForm, setPatientForm, INITIAL
                             placeholder="00.000-000"
                         />
                     </label>
-                    <label className="flex flex-col w-2/5 gap-2">
-                        Número
+                    <label className="flex flex-col gap-2 w-2/5">
+                        Bairro
                         <input
                             onChange={handleChange}
-                            name='address_number'
-                            value={patientForm.address_number}
+                            name='address_line'
+                            value={patientForm.district}
                             className="py-2 px-3 rounded-lg text-black"
-                            type="number"
-                            placeholder="00"
+                            type="text"
+                            placeholder="Rua de Exemplo"
                         />
                     </label>
                 </div>
@@ -197,15 +197,15 @@ export default function PatientsFormModal({ patientForm, setPatientForm, INITIAL
                             placeholder="Rua de Exemplo"
                         />
                     </label>
-                    <label className="flex flex-col gap-2 w-2/5">
-                        Bairro
+                    <label className="flex flex-col w-2/5 gap-2">
+                        Número
                         <input
                             onChange={handleChange}
-                            name='address_line'
-                            value={patientForm.district}
+                            name='address_number'
+                            value={patientForm.address_number}
                             className="py-2 px-3 rounded-lg text-black"
-                            type="text"
-                            placeholder="Rua de Exemplo"
+                            type="number"
+                            placeholder="00"
                         />
                     </label>
                 </div>
