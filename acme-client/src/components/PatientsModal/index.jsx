@@ -10,9 +10,15 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
 
     const handleChange = (e) => {
         if (e.target.name === 'state') {
-            return setPatientForm({ ...patientForm, [e.target.name]: e.target.value.toUpperCase() });
+            return setPatientForm({
+                ...patientForm,
+                [e.target.name]: e.target.value.toUpperCase()
+            });
         }
-        setPatientForm({ ...patientForm, [e.target.name]: e.target.value });
+        setPatientForm({
+            ...patientForm,
+            [e.target.name]: e.target.value
+        });
     }
 
     const getAddress = _.debounce(async () => {
@@ -20,7 +26,13 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
         if (onlyNumbersZipCode.length !== 8) return;
 
         const { data } = await fetchAddress.get(`/${onlyNumbersZipCode}/json/`);
-        setPatientForm({ ...patientForm, district: data.bairro, address_line: data.logradouro, city: data.localidade, state: data.uf });
+        setPatientForm({
+            ...patientForm,
+            district: data.bairro,
+            address_line: data.logradouro,
+            city: data.localidade,
+            state: data.uf
+        });
     }, 700);
 
     const handleGetAddress = async (e) => {
@@ -34,9 +46,19 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
             const onlyNumbersCPF = patientForm.cpf.replaceAll('.', '').replaceAll('-', '').replaceAll('_', '');
             const onlyNumbersZipCode = patientForm.zip_code.replaceAll('.', '').replaceAll('-', '').replaceAll('_', '');
 
-            const { title: _, open: __, cpf: ___, zip_code: ____, ...patientData } = patientForm;
+            const {
+                title: _,
+                open: __,
+                cpf: ___,
+                zip_code: ____,
+                ...patientData
+            } = patientForm;
 
-            const { data } = await api.post('/patients/register', { ...patientData, cpf: onlyNumbersCPF, zip_code: onlyNumbersZipCode });
+            const { data } = await api.post('/patients/register', {
+                ...patientData,
+                cpf: onlyNumbersCPF,
+                zip_code: onlyNumbersZipCode
+            });
 
             setPatientForm({ ...INITIAL_STATE });
             getAllPatients()
@@ -48,7 +70,7 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
 
     return (
         <div
-            className='modal-bg'
+            className='modal-bg z-10'
         >
             <form
                 onSubmit={handleSubmit}

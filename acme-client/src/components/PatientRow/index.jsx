@@ -42,7 +42,6 @@ export default function PatientRow({ patient, getAllPatients }) {
             getAllPatients();
             popup.toastSuccess(data);
         } catch (error) {
-            console.log(error);
             popup.toastError(error.response.data);
         }
     }

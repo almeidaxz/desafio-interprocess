@@ -3,6 +3,7 @@ import PatientRow from "../../components/PatientRow";
 import popup from '../../utils/toastify';
 import api from '../../services/apiConnection';
 import PatientsModal from "../../components/PatientsModal";
+import _ from 'lodash';
 import { MagnifyingGlass } from 'phosphor-react';
 
 export default function Home() {
@@ -19,7 +20,8 @@ export default function Home() {
     city: '',
     state: ''
   }
-  const [patients, setPatients] = useState();
+  const [patients, setPatients] = useState([]);
+  const [initialPatients, setInitialPatients] = useState([]);
   const [patientForm, setPatientForm] = useState(INITIAL_STATE);
 
   const getAllPatients = async () => {
@@ -35,9 +37,26 @@ export default function Home() {
       const patientsList = [...activePatients, ...inactivePatients];
 
       setPatients(patientsList);
+      setInitialPatients(patientsList);
     } catch (error) {
       popup.toastError('Erro ao buscar pacientes. Tente novamente.');
     }
+  }
+
+  const filterByName = _.debounce((value) => {
+    const filteredByName = initialPatients.filter((patient) => {
+      return patient.name.toLowerCase().includes(value.toLowerCase())
+    });
+
+    setPatients(filteredByName);
+
+    if (value === '') {
+      setPatients(initialPatients);
+    }
+  }, 700);
+
+  const handleFilterByName = (e) => {
+    filterByName(e.target.value);
   }
 
   useEffect(() => {
@@ -68,6 +87,7 @@ export default function Home() {
             weight="bold"
           />
           <input
+            onChange={handleFilterByName}
             className="w-64 px-3 py-1 rounded-lg shadow"
             type="text"
             placeholder="Pesquisar"
