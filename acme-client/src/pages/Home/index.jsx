@@ -5,7 +5,21 @@ import api from '../../services/apiConnection';
 import PatientsModal from "../../components/PatientsModal";
 
 export default function Home() {
+  const INITIAL_STATE = {
+    title: '',
+    open: false,
+    name: '',
+    birth_date: '',
+    gender: '',
+    cpf: '',
+    address_line: '',
+    address_number: '',
+    zip_code: '',
+    city: '',
+    state: ''
+  }
   const [patients, setPatients] = useState();
+  const [patientForm, setPatientForm] = useState(INITIAL_STATE);
 
   const getAllPatients = async () => {
     try {
@@ -23,10 +37,17 @@ export default function Home() {
 
   return (
     <main className="w-[1024px] my-0 mx-auto flex flex-col items-center justify-center">
-      <PatientsModal />
+      {patientForm.open &&
+        <PatientsModal
+          patientForm={patientForm}
+          setPatientForm={setPatientForm}
+          INITIAL_STATE={INITIAL_STATE}
+        />
+      }
       <h1 className="font-bold text-2xl">Pacientes</h1>
       <button
         className="w-32 py-2 mb-8 rounded-lg self-end text-white font-semibold bg-[#40c4ff] hover:bg-[#00a7ef]"
+        onClick={(e) => setPatientForm({ ...patientForm, open: true })}
       >
         Adicionar
       </button>
