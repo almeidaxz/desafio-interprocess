@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { formatDateToBr } from '../../utils/formatDates';
-import { useState } from 'react';
+import popup from '../../utils/toastify';
+import api from '../../services/apiConnection';
 
-export default function PatientRow({ patient }) {
+export default function PatientRow({ patient, getAllPatients }) {
     const [patientData, setPatientData] = useState({
         name: '',
         address: '',
@@ -27,6 +28,29 @@ export default function PatientRow({ patient }) {
         setPatientData({ gender: patient.gender, name: patient.name, cpf: patient.cpf, address: formatedAddress, birth_date: birthDate });
     }
 
+    const handleInactivate = async () => {
+        try {
+            const { data } = await api.delete(`/patient/${patient?.id}/delete`);
+
+            getAllPatients();
+            popup.toastSuccess(data);
+        } catch (error) {
+            console.log(error);
+            popup.toastError(error.response.data);
+        }
+    }
+
+    const handleReactivate = async () => {
+        try {
+            const { data } = await api.put(`/patient/${patient?.id}/activate`);
+
+            getAllPatients();
+            popup.toastSuccess(data);
+        } catch (error) {
+            popup.toastError(error.response.data);
+        }
+    }
+
 
     useEffect(() => {
         handleFormatData();
@@ -34,22 +58,36 @@ export default function PatientRow({ patient }) {
 
     return (
         <tr
-            style={patient.active === false ? { opacity: '0.5' } : null}
             className='text-white'
         >
-            <td className='max-w-[120px] truncate pl-4 cursor-pointer'>
+            <td
+                style={patient.active === false ? { opacity: '0.5' } : null}
+                className='max-w-[120px] truncate pl-4 cursor-pointer'
+            >
                 {patientData.name}
             </td>
-            <td className='max-w-[90px] truncate cursor-pointer'>
+            <td
+                style={patient.active === false ? { opacity: '0.5' } : null}
+                className='max-w-[90px] truncate cursor-pointer'
+            >
                 {patientData.cpf}
             </td>
-            <td className='max-w-[80px] truncate cursor-pointer'>
+            <td
+                style={patient.active === false ? { opacity: '0.5' } : null}
+                className='max-w-[80px] truncate cursor-pointer'
+            >
                 {patientData.birth_date}
             </td>
-            <td className='max-w-[80px] truncate cursor-pointer'>
+            <td
+                style={patient.active === false ? { opacity: '0.5' } : null}
+                className='max-w-[80px] truncate cursor-pointer'
+            >
                 {patientData.gender}
             </td>
-            <td className='max-w-[140px] truncate cursor-pointer'>
+            <td
+                style={patient.active === false ? { opacity: '0.5' } : null}
+                className='max-w-[140px] truncate cursor-pointer'
+            >
                 {patientData.address}
             </td>
             <td
@@ -62,12 +100,14 @@ export default function PatientRow({ patient }) {
                     Editar
                 </button>
                 <button
+                    onClick={handleInactivate}
                     style={patient.active === false ? { display: 'none' } : { display: 'block' }}
                     className='py-1 px-2 bg-red-400 hover:bg-red-500 rounded-lg cursor-pointer'
                 >
                     Desativar
                 </button>
                 <button
+                    onClick={handleReactivate}
                     style={patient.active === false ? { display: 'block' } : { display: 'none' }}
                     className='py-1 px-2 bg-sky-400 hover:bg-sky-500 rounded-lg cursor-pointer'
                 >

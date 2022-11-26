@@ -49,7 +49,8 @@ const editPatient = async (req, res) => {
 }
 
 const inactivatePatient = async (req, res) => {
-    const { id } = req.params;
+    const { id: patient_id } = req.params;
+    const id = Number(patient_id);
 
     try {
         const existingPatient = await knex('patients').where({ id }).first();

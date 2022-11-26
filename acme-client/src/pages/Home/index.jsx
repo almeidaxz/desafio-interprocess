@@ -25,7 +25,15 @@ export default function Home() {
     try {
       const { data } = await api.get('patients/list');
 
-      setPatients(data);
+      const activePatients = data.filter((patient) => {
+        return patient.active === true;
+      });
+      const inactivePatients = data.filter((patient) => {
+        return patient.active === false;
+      });
+      const patientsList = [...activePatients, ...inactivePatients];
+
+      setPatients(patientsList);
     } catch (error) {
       popup.toastError('Erro ao buscar pacientes. Tente novamente.');
     }
@@ -65,7 +73,11 @@ export default function Home() {
         </thead>
         <tbody>
           {patients?.map((patient) => {
-            return <PatientRow key={patient?.id} patient={patient} />
+            return <PatientRow
+              getAllPatients={getAllPatients}
+              key={patient?.id}
+              patient={patient}
+            />
           })}
         </tbody>
       </table>
