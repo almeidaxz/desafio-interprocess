@@ -5,10 +5,9 @@ import fetchAddress from '../../services/cepConnection';
 import popup from '../../utils/toastify';
 import { XCircle } from 'phosphor-react';
 
-export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STATE }) {
+export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STATE, getAllPatients }) {
 
     const handleChange = (e) => {
-        console.log(e.target.value);
         setPatientForm({ ...patientForm, [e.target.name]: e.target.value });
     }
 
@@ -28,12 +27,12 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
 
         try {
             const { title: _, open: __, ...patientData } = patientForm;
-            console.log(patientData);
-            await api.post('/patients/register', patientData);
+            const { data } = await api.post('/patients/register', patientData);
 
-            setPatients(data);
+            setPatientForm({ ...INITIAL_STATE });
+            getAllPatients()
+            popup.toastSuccess(data);
         } catch (error) {
-            console.log(error);
             popup.toastError(error.response.data);
         }
     }
@@ -67,6 +66,7 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                     <label className="flex flex-col w-2/5 gap-2">
                         Data de nascimento*
                         <input
+                            style={patientForm.birth_date ? { color: 'black' } : { color: '#999' }}
                             onChange={handleChange}
                             name='birth_date'
                             value={patientForm.birth_date}
@@ -77,6 +77,7 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                     <label className="flex flex-col w-3/5 gap-2">
                         Gênero*
                         <select
+                            style={patientForm.gender ? { color: 'black' } : { color: '#999' }}
                             className="py-2 px-3 rounded-lg"
                             name='gender'
                             value={patientForm.gender}
@@ -98,17 +99,6 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                         className="py-2 px-3 rounded-lg text-black"
                         type="number"
                         placeholder="000.000.000-00"
-                    />
-                </label>
-                <label className="flex flex-col gap-2">
-                    Rua
-                    <input
-                        onChange={handleChange}
-                        name='address_line'
-                        value={patientForm.address_line}
-                        className="py-2 px-3 rounded-lg text-black"
-                        type="text"
-                        placeholder="Rua de Exemplo"
                     />
                 </label>
                 <div className="flex items-center justify-between gap-6">
@@ -135,8 +125,18 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                             placeholder="00"
                         />
                     </label>
-
                 </div>
+                <label className="flex flex-col gap-2">
+                    Rua
+                    <input
+                        onChange={handleChange}
+                        name='address_line'
+                        value={patientForm.address_line}
+                        className="py-2 px-3 rounded-lg text-black"
+                        type="text"
+                        placeholder="Rua de Exemplo"
+                    />
+                </label>
                 <div className="flex items-center justify-between gap-6">
                     <label className="flex flex-col w-3/5 gap-2">
                         Cidade

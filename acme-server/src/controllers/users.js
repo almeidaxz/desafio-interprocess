@@ -17,10 +17,10 @@ const registerUser = async (req, res) => {
 
         await knex('users').insert({ name, email, password: encryptedPassword });
 
-        return res.status(201).json({ message: 'Usuário cadastrado com sucesso.' });
+        return res.status(201).json('Usuário cadastrado com sucesso.');
     } catch (error) {
 
-        return res.status(500).json({ message: 'Erro no servidor.' });
+        return res.status(500).json('Erro no servidor.');
     }
 }
 

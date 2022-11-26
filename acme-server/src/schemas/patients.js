@@ -7,9 +7,9 @@ const registerPatientSchema = joi.object({
         'any.required': 'O nome deve ser preenchido.',
         'string.empty': 'O nome deve ser preenchido.'
     }),
-    birth_date: joi.date().format('YYYY-MM-DD').greater('now').required().messages({
+    birth_date: joi.date().format('YYYY-MM-DD').max('now').iso().required().messages({
         'any.required': 'A senha deve ser preenchida.',
-        'date.greater': 'A data de nascimento não deve ser maior do que hoje.',
+        'date.max': 'A data de nascimento não deve ser posterior ao dia de  hoje.',
         'date.format': 'Informe uma data válida.'
     }),
     gender: joi.string().required().trim().messages({
@@ -18,31 +18,27 @@ const registerPatientSchema = joi.object({
     }),
     cpf: joi.string().length(11).pattern(/^\d+$/).trim().required().messages({
         'any.required': 'O CPF deve ser informado.',
-        'string.empty': 'O CPF deve ser informado.'
+        'string.empty': 'O CPF deve ser informado.',
+        'string.length': 'O CPF deve conter 11 dígitos',
+    }),
+    zip_code: joi.string().length(8).optional().empty('').messages({
+        'string.length': 'O CEP deve conter 8 dígitos.'
+    }),
+    address_number: joi.number().optional().empty('').messages({
+        'number.base': 'O número deve ser informado.'
     }),
     address_line: joi.string().required().optional().empty('').trim().messages({
         'any.required': 'A rua deve ser informada.',
         'string.empty': 'A rua deve ser informada.'
     }),
-    zip_code: joi.number().required().optional().empty('').messages({
-        'any.required': 'O CEP deve ser informado.',
-        'number.base': 'O CEP deve ser informado.'
+    district: joi.string().optional().empty('').trim().messages({
+        'any.required': 'O bairro deve ser informado.'
     }),
-    address_number: joi.number().required().optional().empty('').messages({
-        'any.required': 'O número deve ser informado.',
-        'number.base': 'O número deve ser informado.'
+    city: joi.string().optional().empty('').trim().messages({
+        'any.required': 'A cidade deve ser informada.'
     }),
-    district: joi.string().required().optional().empty('').trim().messages({
-        'any.required': 'O bairro deve ser informado.',
-        'string.empty': 'O bairro deve ser informado.'
-    }),
-    city: joi.string().required().optional().empty('').trim().messages({
-        'any.required': 'A cidade deve ser informada.',
-        'string.empty': 'A cidade deve ser informada.'
-    }),
-    state: joi.string().required().optional().empty('').trim().messages({
-        'any.required': 'A estado deve ser informada.',
-        'string.empty': 'A estado deve ser informada.'
+    state: joi.string().length(2).optional().empty('').trim().messages({
+        'string.length': 'O estado deve possuir 2 caracteres.'
     }),
 });
 

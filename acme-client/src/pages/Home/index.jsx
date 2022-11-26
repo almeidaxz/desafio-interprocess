@@ -12,11 +12,11 @@ export default function Home() {
     birth_date: '',
     gender: '',
     cpf: '',
-    address_line: '',
-    address_number: '',
+    address_line: undefined,
+    address_number: undefined,
     zip_code: '',
-    city: '',
-    state: ''
+    city: undefined,
+    state: undefined
   }
   const [patients, setPatients] = useState();
   const [patientForm, setPatientForm] = useState(INITIAL_STATE);
@@ -42,6 +42,7 @@ export default function Home() {
           patientForm={patientForm}
           setPatientForm={setPatientForm}
           INITIAL_STATE={INITIAL_STATE}
+          getAllPatients={getAllPatients}
         />
       }
       <h1 className="font-bold text-2xl">Pacientes</h1>

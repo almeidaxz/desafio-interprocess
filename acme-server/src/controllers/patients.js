@@ -7,7 +7,7 @@ const listPatients = async (req, res) => {
         return res.status(200).json(patientsList);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: 'Erro interno do servidor.' });
+        return res.status(500).json('Erro interno do servidor.');
     }
 }
 
@@ -17,15 +17,15 @@ const registerPatient = async (req, res) => {
     try {
         const existingPatient = await knex('patients').where({ cpf }).first();
         if (existingPatient) {
-            return res.status(400).json({ message: 'Paciente já cadastrado.' });
+            return res.status(400).json('Paciente com esse CPF já cadastrado.');
         }
 
         await knex('patients').insert({ name, birth_date, cpf, gender, address_line, address_number, district, city, state, zip_code });
 
-        return res.status(201).json({ message: `Paciente ${name} cadastrado com sucesso.` });
+        return res.status(201).json(`Paciente "${name}" cadastrado com sucesso.`);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: 'Erro interno do servidor.' });
+        return res.status(500).json('Erro interno do servidor.');
     }
 }
 
@@ -36,15 +36,15 @@ const editPatient = async (req, res) => {
     try {
         const existingPatient = await knex('patients').where({ id }).first();
         if (!existingPatient) {
-            return res.status(404).json({ message: 'Paciente não encontrado.' });
+            return res.status(404).json('Paciente não encontrado.');
         }
 
         await knex('patients').update({ name, birth_date, cpf, gender, address }).where({ id });
 
-        return res.status(200).json({ message: 'Dados do paciente atualizados com sucesso.' });
+        return res.status(200).json('Dados do paciente atualizados com sucesso.');
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: 'Erro interno do servidor.' });
+        return res.status(500).json('Erro interno do servidor.');
     }
 }
 
@@ -54,15 +54,15 @@ const inactivatePatient = async (req, res) => {
     try {
         const existingPatient = await knex('patients').where({ id }).first();
         if (!existingPatient) {
-            return res.status(404).json({ message: 'Paciente não encontrado.' });
+            return res.status(404).json('Paciente não encontrado.');
         }
 
         await knex('patients').update({ active: false }).where({ id });
 
-        return res.status(200).json({ message: 'Paciente excluído com sucesso.' });
+        return res.status(200).json('Paciente inativado com sucesso.');
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: 'Erro interno do servidor.' });
+        return res.status(500).json('Erro interno do servidor.');
     }
 }
 
@@ -72,15 +72,15 @@ const activatePatient = async (req, res) => {
     try {
         const existingPatient = await knex('patients').where({ id }).first();
         if (!existingPatient) {
-            return res.status(404).json({ message: 'Paciente não encontrado.' });
+            return res.status(404).json('Paciente não encontrado.');
         }
 
         await knex('patients').update({ active: true }).where({ id });
 
-        return res.status(200).json({ message: 'Paciente ativado com sucesso.' });
+        return res.status(200).json('Paciente ativado com sucesso.');
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: 'Erro interno do servidor.' });
+        return res.status(500).json('Erro interno do servidor.');
     }
 }
 
