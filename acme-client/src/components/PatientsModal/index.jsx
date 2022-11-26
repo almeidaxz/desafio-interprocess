@@ -69,7 +69,6 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                         <input
                             onChange={handleChange}
                             name='birth_date'
-                            required={false}
                             value={patientForm.birth_date}
                             className="py-2 px-3 rounded-lg text-black"
                             type="date"
@@ -82,7 +81,6 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                             name='gender'
                             value={patientForm.gender}
                             onChange={handleChange}
-                            required={false}
                         >
                             <option value="" disabled>Selecionar</option>
                             <option>Masculino</option>
