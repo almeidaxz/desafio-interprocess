@@ -6,7 +6,7 @@ import popup from '../../utils/toastify';
 import InputMask from "react-input-mask";
 import { XCircle } from 'phosphor-react';
 
-export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STATE, getAllPatients }) {
+export default function PatientsFormModal({ patientForm, setPatientForm, INITIAL_STATE, getAllPatients }) {
 
     const handleChange = (e) => {
         if (e.target.name === 'state') {

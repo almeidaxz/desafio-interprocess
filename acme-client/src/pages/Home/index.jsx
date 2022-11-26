@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import PatientRow from "../../components/PatientRow";
 import popup from '../../utils/toastify';
 import api from '../../services/apiConnection';
-import PatientsModal from "../../components/PatientsModal";
+import PatientsModal from "../../components/PatientsFormModal";
+import PatientDetailsModal from "../../components/PatientDetailsModal";
 import _ from 'lodash';
 import { MagnifyingGlass } from 'phosphor-react';
 
@@ -23,6 +24,14 @@ export default function Home() {
   const [patients, setPatients] = useState([]);
   const [initialPatients, setInitialPatients] = useState([]);
   const [patientForm, setPatientForm] = useState(INITIAL_STATE);
+  const [selectedPatient, setSelectedPatient] = useState({
+    open: false,
+    name: '',
+    address: '',
+    cpf: '',
+    birth_date: '',
+    gender: ''
+  });
 
   const getAllPatients = async () => {
     try {
@@ -50,7 +59,7 @@ export default function Home() {
 
     setPatients(filteredByName);
 
-    if (value === '') {
+    if (value === '' || value.trim() === '') {
       setPatients(initialPatients);
     }
   }, 700);
@@ -73,6 +82,7 @@ export default function Home() {
           getAllPatients={getAllPatients}
         />
       }
+      <PatientDetailsModal />
       <h1 className="mb-4 font-bold text-2xl">Pacientes</h1>
       <div className="mb-4 flex items-center self-end gap-6">
         <button
@@ -108,9 +118,11 @@ export default function Home() {
         <tbody>
           {patients?.map((patient) => {
             return <PatientRow
-              getAllPatients={getAllPatients}
               key={patient?.id}
               patient={patient}
+              getAllPatients={getAllPatients}
+              selectedPatient={selectedPatient}
+              setSelectedPatient={setSelectedPatient}
             />
           })}
         </tbody>

@@ -3,14 +3,7 @@ import { formatDateToBr } from '../../utils/formatDates';
 import popup from '../../utils/toastify';
 import api from '../../services/apiConnection';
 
-export default function PatientRow({ patient, getAllPatients }) {
-    const [patientData, setPatientData] = useState({
-        name: '',
-        address: '',
-        cpf: '',
-        birth_date: '',
-        gender: ''
-    });
+export default function PatientRow({ patient, getAllPatients, selectedPatient, setSelectedPatient }) {
 
     const handleFormatData = () => {
 
@@ -32,7 +25,7 @@ export default function PatientRow({ patient, getAllPatients }) {
             formatedAddress = 'Não informado.';
         }
 
-        setPatientData({ cpf: formatedCPF, gender: patient.gender, name: patient.name, address: formatedAddress, birth_date: birthDate });
+        setSelectedPatient({ cpf: formatedCPF, gender: patient.gender, name: patient.name, address: formatedAddress, birth_date: birthDate });
     }
 
     const handleInactivate = async () => {
@@ -57,6 +50,11 @@ export default function PatientRow({ patient, getAllPatients }) {
         }
     }
 
+    const handleOpenPatientDetails = () => {
+        console.log('teste');
+        setSelectedPatient({ ...selectedPatient, open: true })
+    }
+
 
     useEffect(() => {
         handleFormatData();
@@ -67,34 +65,39 @@ export default function PatientRow({ patient, getAllPatients }) {
             className='text-white'
         >
             <td
+                onClick={handleOpenPatientDetails}
                 style={patient.active === false ? { opacity: '0.5' } : null}
-                className='max-w-[120px] truncate pl-4 cursor-pointer'
+                className='max-w-[120px] truncate cursor-pointer pl-4'
             >
-                {patientData.name}
+                {selectedPatient.name}
             </td>
             <td
+                onClick={handleOpenPatientDetails}
                 style={patient.active === false ? { opacity: '0.5' } : null}
                 className='max-w-[90px] truncate cursor-pointer'
             >
-                {patientData.cpf}
+                {selectedPatient.cpf}
             </td>
             <td
+                onClick={handleOpenPatientDetails}
                 style={patient.active === false ? { opacity: '0.5' } : null}
                 className='max-w-[80px] truncate cursor-pointer'
             >
-                {patientData.birth_date}
+                {selectedPatient.birth_date}
             </td>
             <td
+                onClick={handleOpenPatientDetails}
                 style={patient.active === false ? { opacity: '0.5' } : null}
                 className='max-w-[80px] truncate cursor-pointer'
             >
-                {patientData.gender}
+                {selectedPatient.gender}
             </td>
             <td
+                onClick={handleOpenPatientDetails}
                 style={patient.active === false ? { opacity: '0.5' } : null}
                 className='max-w-[140px] truncate cursor-pointer'
             >
-                {patientData.address}
+                {selectedPatient.address}
             </td>
             <td
                 className='py-4 pr-4 flex justify-end gap-3'
