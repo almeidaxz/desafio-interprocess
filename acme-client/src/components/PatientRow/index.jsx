@@ -13,6 +13,15 @@ export default function PatientRow({ patient, getAllPatients }) {
     });
 
     const handleFormatData = () => {
+
+        const formatCpf = (cpf) => {
+            cpf = cpf.toString();
+            return cpf.slice(0, 3) + "." + cpf.slice(3, 6) + "." + cpf.slice(6, 9) + "-" + cpf.slice(9, 11);
+        }
+        const formatedCPF = formatCpf(patient.cpf);
+
+        const birthDate = formatDateToBr(patient.birth_date);
+
         let rawZipCode = patient.zip_code?.split('');
         rawZipCode?.splice(5, 0, '-');
         const formatedZipCode = rawZipCode?.join('');
@@ -23,9 +32,7 @@ export default function PatientRow({ patient, getAllPatients }) {
             formatedAddress = 'Não informado.';
         }
 
-        const birthDate = formatDateToBr(patient.birth_date);
-
-        setPatientData({ gender: patient.gender, name: patient.name, cpf: patient.cpf, address: formatedAddress, birth_date: birthDate });
+        setPatientData({ cpf: formatedCPF, gender: patient.gender, name: patient.name, address: formatedAddress, birth_date: birthDate });
     }
 
     const handleInactivate = async () => {
