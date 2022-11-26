@@ -1,0 +1,6 @@
+.bg-nurse {
+    background-image: url('../../assets/bg-nurse.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

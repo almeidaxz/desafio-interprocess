@@ -1,0 +1,18 @@
+select{
+    color: black;
+}
+select:invalid {
+    color: gray;
+}
+
+option[value=""][disabled] {
+    display: none;
+}
+
+option {
+    color: black;
+}
+
+input[type=date]:invalid::-webkit-datetime-edit {
+    color: #999;
+}

@@ -7,7 +7,7 @@ const registerPatientSchema = joi.object({
         'any.required': 'O nome deve ser preenchido.',
         'string.empty': 'O nome deve ser preenchido.'
     }),
-    birth_date: joi.date().format('YYYY-MM-DD').required().messages({
+    birth_date: joi.date().format('YYYY-MM-DD').greater('now').required().messages({
         'any.required': 'A senha deve ser preenchida.',
         'date.greater': 'A data de nascimento não deve ser maior do que hoje.',
         'date.format': 'Informe uma data válida.'
