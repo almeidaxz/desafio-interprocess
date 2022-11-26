@@ -1,4 +1,4 @@
-const knex = require('../services/apiConnection');
+const knex = require('../services/bdConnection');
 
 const listPatients = async (req, res) => {
     try {

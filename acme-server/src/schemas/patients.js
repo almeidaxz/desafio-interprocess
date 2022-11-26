@@ -23,10 +23,30 @@ const registerPatientSchema = joi.object({
         'any.required': 'O gênero deve ser informado.',
         'string.empty': 'O gênero deve ser informado.'
     }),
-    address: joi.string().required().trim().messages({
-        'any.required': 'O endereço deve ser informado.',
-        'string.empty': 'O endereço deve ser informado.'
-    })
+    address_line: joi.string().required().trim().messages({
+        'any.required': 'A rua deve ser informada.',
+        'string.empty': 'A rua deve ser informada.'
+    }),
+    zip_code: joi.number().required().messages({
+        'any.required': 'O CEP deve ser informado.',
+        'number.base': 'O CEP deve ser informado.'
+    }),
+    address_number: joi.number().required().messages({
+        'any.required': 'O número deve ser informado.',
+        'number.base': 'O número deve ser informado.'
+    }),
+    district: joi.string().required().trim().messages({
+        'any.required': 'O bairro deve ser informado.',
+        'string.empty': 'O bairro deve ser informado.'
+    }),
+    city: joi.string().required().trim().messages({
+        'any.required': 'A cidade deve ser informada.',
+        'string.empty': 'A cidade deve ser informada.'
+    }),
+    state: joi.string().required().trim().messages({
+        'any.required': 'A estado deve ser informada.',
+        'string.empty': 'A estado deve ser informada.'
+    }),
 });
 
 const editPatientSchema = joi.object({

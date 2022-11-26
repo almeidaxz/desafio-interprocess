@@ -7,10 +7,10 @@ const registerUserSchema = joi.object({
     }),
     email: joi.string().email().required().messages({
         'any.required': 'O e-mail deve ser preenchido.',
-        'string.email': 'O e-mail inválido.',
+        'string.email': 'Informe um e-mail válido.',
         'string.empty': 'O e-mail deve ser preenchido.'
     }),
-    password: joi.string().required().messages({
+    password: joi.string().min(8).required().messages({
         'any.required': 'A senha deve ser preenchida.',
         'string.empty': 'A senha deve ser preenchida.',
         'string.min': 'A senha deve ter no mínimo 8 caracteres.'

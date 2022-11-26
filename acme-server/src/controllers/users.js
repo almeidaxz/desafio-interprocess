@@ -1,4 +1,4 @@
-const knex = require('../services/apiConnection');
+const knex = require('../services/bdConnection');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -8,8 +8,9 @@ const registerUser = async (req, res) => {
 
     try {
         const existingEmail = await knex('users').where({ email }).first();
+        console.log(existingEmail);
         if (existingEmail) {
-            return res.status(400).json({ message: 'Já existe um usuário cadastrado com esse e-mail.' });
+            return res.status(400).json('Já existe um usuário cadastrado com esse e-mail.');
         }
 
         const encryptedPassword = await bcrypt.hash(password, 10);
@@ -18,7 +19,7 @@ const registerUser = async (req, res) => {
 
         return res.status(201).json({ message: 'Usuário cadastrado com sucesso.' });
     } catch (error) {
-        console.log(error.message);
+
         return res.status(500).json({ message: 'Erro no servidor.' });
     }
 }
@@ -29,12 +30,12 @@ const loginUser = async (req, res) => {
     try {
         const existingUser = await knex('users').where({ email }).first();
         if (!existingUser) {
-            return res.status(401).json({ message: 'Usuario não cadastrado.' });
+            return res.status(401).json('Usuario não cadastrado.');
         }
 
         const decryptedPassword = await bcrypt.compare(password, existingUser.password);
         if (!decryptedPassword) {
-            return res.status(401).json({ message: 'Senha incorreta.' });
+            return res.status(401).json('Senha incorreta.');
         }
 
         const token = jwt.sign({ id: existingUser.id, name: existingUser.name }, process.env.JWT_PASSWORD, { expiresIn: '8h' });
@@ -44,7 +45,7 @@ const loginUser = async (req, res) => {
         return res.status(200).json({ ...logedUser, token });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: 'Erro interno do servidor.' });
+        return res.status(500).json('Erro interno do servidor.');
     }
 }
 
