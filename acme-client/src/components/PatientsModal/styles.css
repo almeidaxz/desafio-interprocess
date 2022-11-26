@@ -1,3 +1,6 @@
+select{
+    color: black;
+}
 select:required:invalid {
     color: gray;
 }

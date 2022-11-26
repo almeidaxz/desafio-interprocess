@@ -2,11 +2,13 @@ import _ from 'lodash';
 import './styles.css';
 import api from '../../services/apiConnection';
 import fetchAddress from '../../services/cepConnection';
+import popup from '../../utils/toastify';
 import { XCircle } from 'phosphor-react';
 
 export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STATE }) {
 
     const handleChange = (e) => {
+        console.log(e.target.value);
         setPatientForm({ ...patientForm, [e.target.name]: e.target.value });
     }
 
@@ -21,13 +23,18 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
         getAddress();
     }
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
         try {
-            await api.get('/patients/register');
+            const { title: _, open: __, ...patientData } = patientForm;
+            console.log(patientData);
+            await api.post('/patients/register', patientData);
 
             setPatients(data);
         } catch (error) {
-            popup.toastError('Erro cadastrar paciente. Verifique os dados e tente novamente.');
+            console.log(error);
+            popup.toastError(error.response.data);
         }
     }
 
@@ -62,7 +69,7 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                         <input
                             onChange={handleChange}
                             name='birth_date'
-                            required
+                            required={false}
                             value={patientForm.birth_date}
                             className="py-2 px-3 rounded-lg text-black"
                             type="date"
@@ -72,8 +79,10 @@ export default function PatientsModal({ patientForm, setPatientForm, INITIAL_STA
                         Gênero*
                         <select
                             className="py-2 px-3 rounded-lg"
-                            required
-                            defaultValue={""}
+                            name='gender'
+                            value={patientForm.gender}
+                            onChange={handleChange}
+                            required={false}
                         >
                             <option value="" disabled>Selecionar</option>
                             <option>Masculino</option>
