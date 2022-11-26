@@ -1,4 +1,4 @@
-const knex = require('../services/apiConnection');
+const knex = require('../services/bdConnection');
 
 const listPatients = async (req, res) => {
     try {
@@ -12,7 +12,7 @@ const listPatients = async (req, res) => {
 }
 
 const registerPatient = async (req, res) => {
-    const { name, birth_date, cpf, gender, address } = req.body;
+    const { name, birth_date, cpf, gender, address_line, address_number, district, city, state, zip_code } = req.body;
 
     try {
         const existingPatient = await knex('patients').where({ cpf }).first();
@@ -20,7 +20,7 @@ const registerPatient = async (req, res) => {
             return res.status(400).json({ message: 'Paciente já cadastrado.' });
         }
 
-        await knex('patients').insert({ name, birth_date, cpf, gender, address });
+        await knex('patients').insert({ name, birth_date, cpf, gender, address_line, address_number, district, city, state, zip_code });
 
         return res.status(201).json({ message: `Paciente ${name} cadastrado com sucesso.` });
     } catch (error) {

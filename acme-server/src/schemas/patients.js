@@ -1,22 +1,24 @@
-const joi = require('joi');
+const joiImport = require('joi');
+const dateExtension = require('@joi/date');
+const joi = joiImport.extend(dateExtension);
 
 const registerPatientSchema = joi.object({
     name: joi.string().required().trim().messages({
         'any.required': 'O nome deve ser preenchido.',
         'string.empty': 'O nome deve ser preenchido.'
     }),
-    birth_date: joi.date().format('yyyy-mm-dd').greater('now').required().messages({
-        'any.required': 'A data deve ser preenchida.',
+    birth_date: joi.date().format('YYYY-MM-DD').greater('now').required().messages({
+        'any.required': 'A senha deve ser preenchida.',
         'date.greater': 'A data de nascimento não deve ser maior do que hoje.',
-        'date.format': 'O formato de data inválido.'
-    }),
-    cpf: joi.string().length(11).pattern(/^\d+$/).trim().required().messages({
-        'any.required': 'O CPF deve ser informado.',
-        'string.empty': 'O CPF deve ser informado.'
+        'date.format': 'Informe uma data válida.'
     }),
     gender: joi.string().required().trim().messages({
         'any.required': 'O gênero deve ser informado.',
         'string.empty': 'O gênero deve ser informado.'
+    }),
+    cpf: joi.string().length(11).pattern(/^\d+$/).trim().required().messages({
+        'any.required': 'O CPF deve ser informado.',
+        'string.empty': 'O CPF deve ser informado.'
     }),
     address_line: joi.string().required().optional().empty('').trim().messages({
         'any.required': 'A rua deve ser informada.',
