@@ -1,4 +1,5 @@
 const knex = require('../services/bdConnection');
+const { formatDateToInput } = require('../utils/formatDate');
 
 const listPatients = async (req, res) => {
     try {
@@ -12,6 +13,9 @@ const listPatients = async (req, res) => {
 
 const registerPatient = async (req, res) => {
     const { name, birth_date, cpf, gender, address_line, address_number, district, city, state, zip_code } = req.body;
+
+    console.log(birth_date);
+    console.log(formatDateToInput(birth_date));
 
     try {
         const existingPatient = await knex('patients').where({ cpf }).first();
