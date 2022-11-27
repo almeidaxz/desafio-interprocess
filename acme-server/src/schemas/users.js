@@ -1,7 +1,7 @@
 const joi = require('joi');
 
 const registerUserSchema = joi.object({
-    name: joi.string().required().messages({
+    name: joi.string().required().pattern(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u).messages({
         'any.required': 'O nome deve ser preenchido.',
         'string.empty': 'O nome deve ser preenchido.'
     }),

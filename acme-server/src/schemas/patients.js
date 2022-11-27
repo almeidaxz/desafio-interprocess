@@ -3,7 +3,7 @@ const dateExtension = require('@joi/date');
 const joi = joiImport.extend(dateExtension);
 
 const registerPatientSchema = joi.object({
-    name: joi.string().required().trim().messages({
+    name: joi.string().required().trim().pattern(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u).messages({
         'any.required': 'O nome deve ser preenchido.',
         'string.empty': 'O nome deve ser preenchido.'
     }),
@@ -43,20 +43,15 @@ const registerPatientSchema = joi.object({
 });
 
 const editPatientSchema = joi.object({
-    name: joi.string().required().trim().optional().empty().messages({
+    name: joi.string().required().trim().pattern(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u).optional().empty().messages({
         'any.required': 'O nome deve ser preenchido.',
         'string.empty': 'O nome deve ser preenchido.'
     }),
-    birth_date: joi.date().required().optional().empty().messages({
+    birth_date: joi.date().required().format('YYYY-MM-DD').max('now').iso().optional().empty().messages({
         'any.required': 'A senha deve ser preenchida.',
-        'date.greater': 'A data de nascimento não deve ser maior do que hoje.',
+        'date.max': 'A data de nascimento não deve ser maior do que hoje.',
         'date.format': 'O formado de data é inválido.'
     }),
-    // birth_date: joi.date().greater('now').required().messages({
-    //     'any.required': 'A senha deve ser preenchida.',
-    //     'date.greater': 'A data de nascimento não deve ser maior do que hoje.',
-    //     'date.format': 'O formado de data é inválido.'
-    // }),
     cpf: joi.string().length(11).pattern(/^\d+$/).optional().empty().trim().required().messages({
         'any.required': 'O CPF deve ser informado.',
         'string.empty': 'O CPF deve ser informado.'

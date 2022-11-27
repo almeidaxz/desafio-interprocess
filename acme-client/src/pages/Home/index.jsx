@@ -8,8 +8,12 @@ import _ from 'lodash';
 import { MagnifyingGlass } from 'phosphor-react';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import { clearItems, getItem } from "../../utils/storage";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const token = getItem('token');
+  const navigate = useNavigate();
   const INITIAL_STATE = {
     id: '',
     title: '',
@@ -36,10 +40,13 @@ export default function Home() {
     birth_date: '',
     gender: ''
   });
+  const headers = {
+    Authorization: `Bearer ${token}`
+  }
 
   const getAllPatients = async () => {
     try {
-      const { data } = await api.get('patients/list');
+      const { data } = await api.get('patients/list', { headers });
 
       const activePatients = data.filter((patient) => {
         return patient.active === true;
@@ -52,6 +59,13 @@ export default function Home() {
       setPatients(patientsList);
       setInitialPatients(patientsList);
     } catch (error) {
+      if (error.response.data === 'jwt expired' || error.response.data === 'jwt malformed') {
+        popup.toastError('Token expirado. Faça o login novamente.');
+        clearItems();
+        return setTimeout(() => {
+          navigate('/');
+        }, 1500);
+      }
       popup.toastError('Erro ao buscar pacientes. Tente novamente.');
     }
   }
@@ -86,6 +100,7 @@ export default function Home() {
             setPatientForm={setPatientForm}
             INITIAL_STATE={INITIAL_STATE}
             getAllPatients={getAllPatients}
+            headers={headers}
           />
         }
         {selectedPatient.open &&
@@ -136,6 +151,7 @@ export default function Home() {
                 getAllPatients={getAllPatients}
                 selectedPatient={selectedPatient}
                 setSelectedPatient={setSelectedPatient}
+                headers={headers}
               />
             })}
           </tbody>

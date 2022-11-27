@@ -5,8 +5,11 @@ import fetchAddress from '../../services/cepConnection';
 import popup from '../../utils/toastify';
 import InputMask from "react-input-mask";
 import { XCircle } from 'phosphor-react';
+import { clearItems } from '../../utils/storage';
+import { useNavigate } from 'react-router-dom';
 
-export default function PatientsFormModal({ patientForm, setPatientForm, INITIAL_STATE, getAllPatients }) {
+export default function PatientsFormModal({ patientForm, setPatientForm, INITIAL_STATE, getAllPatients, headers }) {
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         if (e.target.name === 'state') {
@@ -60,7 +63,7 @@ export default function PatientsFormModal({ patientForm, setPatientForm, INITIAL
                     ...patientData,
                     cpf: onlyNumbersCPF,
                     zip_code: onlyNumbersZipCode
-                });
+                }, { headers });
 
                 setPatientForm({ ...INITIAL_STATE });
                 getAllPatients();
@@ -80,12 +83,19 @@ export default function PatientsFormModal({ patientForm, setPatientForm, INITIAL
                 ...patientData,
                 cpf: onlyNumbersCPF,
                 zip_code: onlyNumbersZipCode
-            });
+            }, { headers });
 
             setPatientForm({ ...INITIAL_STATE });
             getAllPatients()
             popup.toastSuccess(data);
         } catch (error) {
+            if (error.response.data === 'jwt expired' || error.response.data === 'jwt malformed') {
+                popup.toastError('Token expirado. Faça o login novamente.');
+                clearItems();
+                return setTimeout(() => {
+                    navigate('/');
+                }, 1500);
+            }
             popup.toastError(error.response.data);
         }
     }

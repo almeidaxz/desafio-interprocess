@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
-import { formatDateToBr, formatDateToInput } from '../../utils/formatDates';
-import popup from '../../utils/toastify';
+import { useNavigate } from 'react-router-dom';
 import api from '../../services/apiConnection';
+import { formatDateToBr, formatDateToInput } from '../../utils/formatDates';
+import { clearItems } from '../../utils/storage';
+import popup from '../../utils/toastify';
 
-export default function PatientRow({ patient, getAllPatients, setSelectedPatient, setPatientForm }) {
+export default function PatientRow({ patient, getAllPatients, setSelectedPatient, setPatientForm, headers }) {
     const [patientData, setPatientData] = useState({});
+    const navigate = useNavigate();
 
     const handleFormatData = () => {
         const formatCpf = (cpf) => {
@@ -22,7 +25,7 @@ export default function PatientRow({ patient, getAllPatients, setSelectedPatient
 
         let formatedAddress = [patient?.address_line, patient?.address_number, patient?.district, cityAndState, formatedZipCode].join(', ');
         if (formatedAddress === ', , , /, -') {
-            formatedAddress = 'Não informado.';
+            formatedAddress = 'Não informado';
         }
 
         setPatientData({ cpf: formatedCPF, gender: patient.gender, name: patient.name, address: formatedAddress, birth_date: birthDate });
@@ -30,22 +33,40 @@ export default function PatientRow({ patient, getAllPatients, setSelectedPatient
 
     const handleInactivate = async () => {
         try {
-            const { data } = await api.delete(`/patient/${patient?.id}/delete`);
+            const { data } = await api.delete(`/patient/${patient?.id}/delete`, { headers });
 
             getAllPatients();
             popup.toastSuccess(data);
         } catch (error) {
+            if (error.response.data === 'jwt expired' || error.response.data === 'jwt malformed') {
+                popup.toastError('Token expirado. Faça o login novamente.');
+                clearItems();
+                return setTimeout(() => {
+                    navigate('/');
+                }, 1500);
+            }
             popup.toastError(error.response.data);
         }
     }
 
     const handleReactivate = async () => {
+        console.log({ headers });
+
         try {
-            const { data } = await api.put(`/patient/${patient?.id}/activate`);
+            const { data } = await api.put(`/patient/${patient?.id}/activate`, {}, {
+                headers
+            });
 
             getAllPatients();
             popup.toastSuccess(data);
         } catch (error) {
+            if (error.response.data === 'jwt expired' || error.response.data === 'jwt malformed') {
+                popup.toastError('Token expirado. Faça o login novamente.');
+                clearItems();
+                return setTimeout(() => {
+                    navigate('/');
+                }, 1500);
+            }
             popup.toastError(error.response.data);
         }
     }
