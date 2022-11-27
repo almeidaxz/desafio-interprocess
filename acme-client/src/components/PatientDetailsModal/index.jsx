@@ -15,7 +15,7 @@ export default function PatientDetailsModal({ selectedPatient, setSelectedPatien
     }
 
     return (
-        <div className="modal-bg">
+        <div className="modal-bg z-10">
             <div
                 className="w-[600px] h-[500px] px-10 pt-12 pb-16 absolute flex flex-col items-center justify-between rounded-lg bg-white z-20"
             >
