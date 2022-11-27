@@ -29,9 +29,9 @@ export default function SignUpForm() {
             await api.post('/user/register', userData);
 
             popup.toastSuccess('Cadastro realizado com sucesso.');
-            navigate('/login');
             setTimeout(() => {
-            }, 1000);
+                navigate('/login');
+            }, 1500);
         } catch (error) {
             console.log(error);
             popup.toastError(error.response.data);

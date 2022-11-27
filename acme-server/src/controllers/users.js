@@ -19,7 +19,6 @@ const registerUser = async (req, res) => {
 
         return res.status(201).json('Usuário cadastrado com sucesso.');
     } catch (error) {
-
         return res.status(500).json('Erro no servidor.');
     }
 }
@@ -42,7 +41,7 @@ const loginUser = async (req, res) => {
 
         const { password: _, ...logedUser } = existingUser;
 
-        return res.status(200).json({ ...logedUser, token });
+        return res.status(200).json({ ...logedUser, token, message: `Bem vindo, ${logedUser.name.split(' ')[0]}` });
     } catch (error) {
         console.log(error);
         return res.status(500).json('Erro interno do servidor.');

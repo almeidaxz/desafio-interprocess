@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/apiConnection";
 import popup from '../../utils/toastify';
+import { setItem } from "../../utils/storage";
 
 export default function LoginForm() {
     const navigate = useNavigate();
@@ -21,11 +22,18 @@ export default function LoginForm() {
 
 
         try {
-            await api.post('/user/login', loginForm);
+            const { data } = await api.post('/user/login', loginForm);
 
-            navigate('/home');
+            setItem('email', data.email);
+            setItem('token', data.token);
+            setItem('name', data.name);
+            setItem('id', data.id);
+
+            popup.toastSuccess(data.message);
+            setTimeout(() => {
+                navigate('/home');
+            }, 1000);
         } catch (error) {
-            console.log(error);
             popup.toastError(error.response.data);
         }
     }
