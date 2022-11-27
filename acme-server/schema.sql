@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS patients (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-    birth_date DATE NOT NULL,
+    birth_date TEXT NOT NULL,
     gender TEXT NOT NULL,
     cpf TEXT NULL UNIQUE,
     zip_code TEXT DEFAULT NULL,
