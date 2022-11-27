@@ -7,6 +7,7 @@ import PatientDetailsModal from "../../components/PatientDetailsModal";
 import _ from 'lodash';
 import { MagnifyingGlass } from 'phosphor-react';
 import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 
 export default function Home() {
   const INITIAL_STATE = {
@@ -140,6 +141,7 @@ export default function Home() {
           </tbody>
         </table>
       </main>
+      <Footer />
     </>
   )
 }
