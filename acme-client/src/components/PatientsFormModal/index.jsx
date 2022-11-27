@@ -102,7 +102,7 @@ export default function PatientsFormModal({ patientForm, setPatientForm, INITIAL
 
     return (
         <div
-            className='modal-bg z-10'
+            className='modal-bg z-20'
         >
             <form
                 onSubmit={handleSubmit}

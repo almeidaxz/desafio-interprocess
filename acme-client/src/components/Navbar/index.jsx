@@ -14,7 +14,7 @@ export default function Navbar() {
 
     return (
         <header
-            className='w-full pt-4 mb-8 fixed z-20'
+            className='w-full pt-4 mb-8 fixed z-10'
             style={path === '/home' ? { backgroundColor: '#F5F5F5' } : null}
         >
             <nav className='lg:max-w-[1024px] xl:max-w-[80%] m-auto flex items-center justify-between'>
