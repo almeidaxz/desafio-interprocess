@@ -1,15 +1,9 @@
-const getItem = (item) => {
+export const getItem = (item) => {
     return localStorage.getItem(item);
 }
-const setItem = (item, value) => {
+export const setItem = (item, value) => {
     return localStorage.setItem(item, value);
 }
-const clearItems = () => {
+export const clearItems = () => {
     return localStorage.clear();
-}
-
-module.exports = {
-    getItem,
-    setItem,
-    clearItems
 }
