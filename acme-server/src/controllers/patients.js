@@ -12,10 +12,8 @@ const listPatients = async (req, res) => {
 }
 
 const registerPatient = async (req, res) => {
-    const { name, birth_date, cpf, gender, address_line, address_number, district, city, state, zip_code } = req.body;
-
-    console.log(birth_date);
-    console.log(formatDateToInput(birth_date));
+    const { name, birth_date: rawDate, cpf, gender, address_line, address_number, district, city, state, zip_code } = req.body;
+    const birth_date = formatDateToInput(rawDate);
 
     try {
         const existingPatient = await knex('patients').where({ cpf }).first();
@@ -33,7 +31,8 @@ const registerPatient = async (req, res) => {
 
 const editPatient = async (req, res) => {
     const { id } = req.params;
-    const { name, birth_date, cpf, gender, address_line, address_number, district, city, state, zip_code } = req.body;
+    const { name, birth_date: rawDate, cpf, gender, address_line, address_number, district, city, state, zip_code } = req.body;
+    const birth_date = formatDateToInput(rawDate);
 
     try {
         const existingPatient = await knex('patients').where({ id }).first();
