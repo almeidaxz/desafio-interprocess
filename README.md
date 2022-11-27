@@ -12,6 +12,7 @@ Link do deploy da API: https://acme-clinica.up.railway.app/
 - Logout de usuário;
 - Listagem de pacientes;
 - Filtragem de pacientes por nome;
+- Mostrar detalhes de um paciente;
 - Cadastro de paciente;
 - Edição de paciente;
 - Desativação e ativação de paciente;
