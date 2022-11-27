@@ -15,11 +15,13 @@ export default function Navbar() {
     return (
         <header className='w-full pt-4 mb-8 fixed'>
             <nav className='max-w-[1024px] m-auto flex items-center justify-between'>
-                <img
-                    className='w-[200px]'
-                    src={Logo}
-                    alt="acme's clinic logo"
-                />
+                <a href="#">
+                    <img
+                        className='w-[200px]'
+                        src={Logo}
+                        alt="acme's clinic logo"
+                    />
+                </a>
                 <SignOut
                     onClick={handleLogOut}
                     style={path === '/home' ? { display: 'block' } : { display: 'none' }}
