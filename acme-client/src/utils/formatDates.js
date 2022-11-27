@@ -14,7 +14,7 @@ export function formatDateToUTC(date) {
     const timeZone = 'Europe/Berlin'
     const zonedDate = utcToZonedTime(newDate, timeZone)
 
-    return format(zonedDate, 'dd/MM/yy');
+    return format(zonedDate, 'dd/MM/yyyy');
 }
 
 export function formatDateToInput(date) {

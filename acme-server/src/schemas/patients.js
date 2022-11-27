@@ -5,7 +5,8 @@ const joi = joiImport.extend(dateExtension);
 const registerPatientSchema = joi.object({
     name: joi.string().required().trim().pattern(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u).messages({
         'any.required': 'O nome deve ser preenchido.',
-        'string.empty': 'O nome deve ser preenchido.'
+        'string.empty': 'O nome deve ser preenchido.',
+        'string.pattern.base': 'Formato de nome inválido.'
     }),
     birth_date: joi.date().format('YYYY-MM-DD').max('now').iso().required().messages({
         'any.required': 'A senha deve ser preenchida.',
@@ -45,7 +46,8 @@ const registerPatientSchema = joi.object({
 const editPatientSchema = joi.object({
     name: joi.string().required().trim().pattern(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u).optional().empty().messages({
         'any.required': 'O nome deve ser preenchido.',
-        'string.empty': 'O nome deve ser preenchido.'
+        'string.empty': 'O nome deve ser preenchido.',
+        'string.pattern.base': 'Formato de nome inválido.'
     }),
     birth_date: joi.date().required().format('YYYY-MM-DD').max('now').iso().optional().empty().messages({
         'any.required': 'A senha deve ser preenchida.',

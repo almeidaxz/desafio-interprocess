@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/apiConnection';
-import { formatDateToBr, formatDateToInput } from '../../utils/formatDates';
+import { formatDateToUTC, formatDateToInput } from '../../utils/formatDates';
 import { clearItems } from '../../utils/storage';
 import popup from '../../utils/toastify';
 
@@ -16,7 +16,7 @@ export default function PatientRow({ patient, getAllPatients, setSelectedPatient
         }
         const formatedCPF = formatCpf(patient.cpf);
 
-        const birthDate = formatDateToBr(patient.birth_date);
+        const birthDate = formatDateToUTC(patient.birth_date);
 
         let rawZipCode = patient.zip_code?.split('');
         rawZipCode?.splice(5, 0, '-');
@@ -50,8 +50,6 @@ export default function PatientRow({ patient, getAllPatients, setSelectedPatient
     }
 
     const handleReactivate = async () => {
-        console.log({ headers });
-
         try {
             const { data } = await api.put(`/patient/${patient?.id}/activate`, {}, {
                 headers
