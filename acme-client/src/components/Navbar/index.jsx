@@ -13,7 +13,7 @@ export default function Navbar() {
     }
 
     return (
-        <header className='w-full pt-4 mb-8 fixed'>
+        <header className='w-full pt-4 mb-8 fixed bg-[#f5f5f5] z-20'>
             <nav className='max-w-[1024px] m-auto flex items-center justify-between'>
                 <a href="#">
                     <img
