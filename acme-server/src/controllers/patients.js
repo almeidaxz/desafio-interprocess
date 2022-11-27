@@ -6,7 +6,6 @@ const listPatients = async (req, res) => {
 
         return res.status(200).json(patientsList);
     } catch (error) {
-        console.log(error);
         return res.status(500).json('Erro interno do servidor.');
     }
 }
@@ -24,7 +23,6 @@ const registerPatient = async (req, res) => {
 
         return res.status(201).json(`Paciente "${name}" cadastrado com sucesso.`);
     } catch (error) {
-        console.log(error);
         return res.status(500).json('Erro interno do servidor.');
     }
 }
@@ -48,7 +46,6 @@ const editPatient = async (req, res) => {
 
         return res.status(200).json('Dados do paciente atualizados com sucesso.');
     } catch (error) {
-        console.log(error);
         return res.status(500).json('Erro interno do servidor.');
     }
 }
@@ -67,7 +64,6 @@ const inactivatePatient = async (req, res) => {
 
         return res.status(200).json('Paciente inativado com sucesso.');
     } catch (error) {
-        console.log(error);
         return res.status(500).json('Erro interno do servidor.');
     }
 }
@@ -85,7 +81,6 @@ const activatePatient = async (req, res) => {
 
         return res.status(200).json('Paciente ativado com sucesso.');
     } catch (error) {
-        console.log(error);
         return res.status(500).json('Erro interno do servidor.');
     }
 }

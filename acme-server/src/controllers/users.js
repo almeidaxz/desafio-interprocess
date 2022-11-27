@@ -8,7 +8,6 @@ const registerUser = async (req, res) => {
 
     try {
         const existingEmail = await knex('users').where({ email }).first();
-        console.log(existingEmail);
         if (existingEmail) {
             return res.status(400).json('Já existe um usuário cadastrado com esse e-mail.');
         }
@@ -43,7 +42,6 @@ const loginUser = async (req, res) => {
 
         return res.status(200).json({ ...logedUser, token, message: `Bem vindo, ${logedUser.name.split(' ')[0]}` });
     } catch (error) {
-        console.log(error);
         return res.status(500).json('Erro interno do servidor.');
     }
 }

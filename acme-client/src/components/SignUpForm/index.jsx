@@ -33,7 +33,6 @@ export default function SignUpForm() {
                 navigate('/login');
             }, 1500);
         } catch (error) {
-            console.log(error);
             popup.toastError(error.response.data);
         }
     }
